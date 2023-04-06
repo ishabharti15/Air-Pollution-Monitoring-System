@@ -1,0 +1,29 @@
+// Define the pins for the MQ-135 sensor
+int mq135pin = A0;
+
+void setup() {
+  // Initialize serial communication
+  Serial.begin(9600);
+}
+
+void loop() {
+  // Read the analog value from the MQ-135 sensor
+  int air_quality = analogRead(mq135pin);
+
+  // Convert the analog value to parts per million (ppm)
+  float ppm = (float)air_quality/1024*5000/200;
+
+  // Print the ppm value to the serial monitor
+  Serial.print("Air Quality (PPM): ");
+  Serial.println(ppm);
+
+  // If the ppm value is higher than a threshold, turn on the LED
+  if(ppm > 100) {
+    digitalWrite(13, HIGH);
+  } else {
+    digitalWrite(13, LOW);
+  }
+
+  // Delay for 1 second before taking the next reading
+  delay(1000);
+}
